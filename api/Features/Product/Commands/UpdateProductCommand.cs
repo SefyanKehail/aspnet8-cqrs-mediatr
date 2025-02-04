@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using api.Features.Product.DTOs;
+using MediatR;
+
+namespace api.Features.Product.Commands
+{
+    public class UpdateProductCommand : IRequest<ProductDTO>
+    {
+
+        public int Id { get; set; }
+        public RequestProductDTO requestProductDTO { get; set;}
+
+        public UpdateProductCommand(int id, RequestProductDTO requestProductDTO)
+        {
+            Id = id;
+            this.requestProductDTO = requestProductDTO;
+        }
+
+    }
+}
