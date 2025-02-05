@@ -1,4 +1,5 @@
 using api.Data;
+using api.Middleware;
 using api.Repositories;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors(allowrRules);
 
