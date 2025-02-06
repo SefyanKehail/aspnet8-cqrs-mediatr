@@ -21,7 +21,7 @@ namespace api.Middleware
             {
                 await _next(context);
             }
-            catch (InvalidProductIdException)
+            catch (InvalidArgumentException)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync("Invalid resource id");

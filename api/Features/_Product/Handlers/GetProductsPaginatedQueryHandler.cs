@@ -2,29 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Features.Product.DTOs;
+using api.Features._Product.DTOs;
 using api.Mappers;
 using api.Models;
+using api.Repositories;
 using api.Services;
 using api.Utils;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace api.Features.Product.Handlers
+namespace api.Features._Product.Handlers
 {
     public class GetProductsPaginatedQueryHandler : IRequestHandler<GetProductsPaginatedQuery, PagedResult<ProductDTO>>
     {
-        private readonly IProductService _productService;
+        private readonly IProductRepository _productRepository;
 
-        public GetProductsPaginatedQueryHandler(IProductService productService)
+        public GetProductsPaginatedQueryHandler(IProductRepository productRepository)
         {
-            _productService = productService;
+            _productRepository = productRepository;
         }
 
         public async Task<PagedResult<ProductDTO>> Handle(GetProductsPaginatedQuery request, CancellationToken cancellationToken)
         {
-            IQueryable<Models.Product> products = _productService.GetAllQuery();
+            IQueryable<Product> products = _productRepository.GetAllQuery();
 
             ProductQueryParamsDTO queryParamsDTO = request.QueryParamsDTO;
 
@@ -39,8 +40,8 @@ namespace api.Features.Product.Handlers
             if (queryParamsDTO.SortBy != null)
             {
                 products = queryParamsDTO.IsDescening
-                                ? DynamicSorting<Models.Product>.SortByDescending(products, queryParamsDTO.SortBy)
-                                : DynamicSorting<Models.Product>.SortyBy(products, queryParamsDTO.SortBy);
+                                ? DynamicSorting<Product>.SortByDescending(products, queryParamsDTO.SortBy)
+                                : DynamicSorting<Product>.SortyBy(products, queryParamsDTO.SortBy);
             }
 
 

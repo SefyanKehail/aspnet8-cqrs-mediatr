@@ -41,7 +41,6 @@ builder.Services.AddSwaggerGen();
 
 // Dependencies
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductService, ProductService>();
 
 
 

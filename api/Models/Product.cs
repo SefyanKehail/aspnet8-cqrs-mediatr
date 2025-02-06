@@ -12,5 +12,9 @@ namespace api.Models
         public string Name { get; set; } = String.Empty;
         [Column(TypeName = "decimal(18,4)")]
         public decimal Amount { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public int StockQuantity { get; set; }
+        public bool IsAvailableInStock { get; set; } = false;
     }
 }

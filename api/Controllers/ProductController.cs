@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Exceptions;
-using api.Features.Product.Commands;
-using api.Features.Product.DTOs;
-using api.Features.Product.Handlers;
-using api.Features.Product.Queries;
-using api.Features.Product.Querries;
+using api.Features._Product.Commands;
+using api.Features._Product.DTOs;
+using api.Features._Product.Handlers;
+using api.Features._Product.Queries;
+using api.Features._Product.Querries;
 using api.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -43,11 +43,6 @@ namespace api.Controllers
             var query = new GetProductByIdQuery(id);
          
             var productDTO = await _mediator.Send(query);
-
-            if (productDTO == null)
-            {
-                return NotFound();
-            }
 
             return Ok(productDTO);
 

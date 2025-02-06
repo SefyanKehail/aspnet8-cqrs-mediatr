@@ -2,19 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Features.Product.DTOs;
 using MediatR;
 
-namespace api.Features.Product.Querries
+namespace api.Features._Product.Commands
 {
-    public class GetProductByIdQuery : IRequest<ProductDTO>
+    public class DeleteProductCommand : IRequest
     {
         public int Id { get; set; }
 
-        public GetProductByIdQuery(int id)
+        public DeleteProductCommand(int id)
         {
             Id = id;
         }
     }
-
 }

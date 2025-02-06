@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Features.Product.DTOs;
+using api.Features._Product.DTOs;
 using api.Utils;
 using MediatR;
 
-namespace api.Features.Product.Handlers
+namespace api.Features._Product.Handlers
 {
     public class GetProductsPaginatedQuery : IRequest<PagedResult<ProductDTO>>
     {
