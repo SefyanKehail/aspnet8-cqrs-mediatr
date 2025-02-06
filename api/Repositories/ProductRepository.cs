@@ -14,7 +14,7 @@ namespace api.Repositories
         private readonly ApplicationDbContext _dbContext;
         public ProductRepository(ApplicationDbContext dbContext)
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<Product> CreateAsync(Product product)
@@ -36,14 +36,23 @@ namespace api.Repositories
             return await _dbContext.Products.ToListAsync();
         }
 
+        
+        public IQueryable<Product> GetAllQuery()
+        {
+            return _dbContext.Products;
+        }
+
         public async Task<Product?> GetByIdAsync(int id)
         {
             return await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        // fix this after repo is the base layer
         public async Task UpdateAsync(int id, Product product)
         {
+            _dbContext.Update(product);
             await _dbContext.SaveChangesAsync();
+            Console.WriteLine($"********************************************** 2 ********************************{product.Name}");
         }
     }
 }

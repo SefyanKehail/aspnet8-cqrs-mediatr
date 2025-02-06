@@ -11,12 +11,12 @@ namespace api.Features.Product.Commands
     {
 
         public int Id { get; set; }
-        public RequestProductDTO requestProductDTO { get; set;}
+        public RequestProductDTO RequestProductDTO { get; set;}
 
         public UpdateProductCommand(int id, RequestProductDTO requestProductDTO)
         {
             Id = id;
-            this.requestProductDTO = requestProductDTO;
+            this.RequestProductDTO = requestProductDTO;
         }
 
     }

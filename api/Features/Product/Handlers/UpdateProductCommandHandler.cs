@@ -28,12 +28,12 @@ namespace api.Features.Product.Handlers
                 throw new InvalidProductIdException();
             }
 
-            if (request.requestProductDTO == null)
+            if (request.RequestProductDTO == null)
             {
                 throw new ProductNotFoundException();
             }
             
-            return await _productService.UpdateAsync(request.Id, request.requestProductDTO);
+            return await _productService.UpdateAsync(request.Id, request.RequestProductDTO);
         }
     }
 }

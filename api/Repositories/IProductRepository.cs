@@ -13,6 +13,6 @@ namespace api.Repositories
         Task DeleteAsync(Product product);
         Task UpdateAsync(int id, Product product);
         Task<IEnumerable<Product>> GetAllAsync();
-
+        IQueryable<Product> GetAllQuery();
     }
 }

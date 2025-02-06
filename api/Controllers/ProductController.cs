@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Exceptions;
 using api.Features.Product.Commands;
 using api.Features.Product.DTOs;
+using api.Features.Product.Handlers;
 using api.Features.Product.Queries;
 using api.Features.Product.Querries;
 using api.Models;
@@ -40,6 +41,7 @@ namespace api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetProductByIdQuery(id);
+         
             var productDTO = await _mediator.Send(query);
 
             if (productDTO == null)
@@ -110,14 +112,29 @@ namespace api.Controllers
         /// <returns>
         /// A 200 OK response containing a list of all products.
         /// </returns>
-        [HttpGet("/products")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             var getAllProductsQuery = new GetAllProductsQuery();
-            
+
             var productDTOs = await _mediator.Send(getAllProductsQuery);
 
             return Ok(productDTOs);
+        }
+
+
+        /// <summary>
+        /// Retrieves a paged list of products.
+        /// </summary>
+        /// <returns>
+        /// A 200 OK response containing a paged list of products.
+        /// </returns>
+        [HttpGet("all/paged")]
+        public async Task<IActionResult> GetAllPaginated([FromQuery] ProductQueryParamsDTO productQueryParamsDTO)
+        {
+            var getProductsPaginatedQuery = new GetProductsPaginatedQuery(productQueryParamsDTO);
+            var productDTOsPaginated = await _mediator.Send(getProductsPaginatedQuery);
+            return Ok(productDTOsPaginated);
         }
     }
 }

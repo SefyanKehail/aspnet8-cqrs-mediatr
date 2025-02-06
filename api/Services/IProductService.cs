@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Features.Product.DTOs;
+using api.Models;
 
 namespace api.Services
 {
@@ -13,5 +14,6 @@ namespace api.Services
         Task DeleteAsync(int id);
         Task<ProductDTO> UpdateAsync(int id, RequestProductDTO requestProductDTO);
         Task<IEnumerable<ProductDTO>> GetAllAsync();
+        IQueryable<Product> GetAllQuery();
     }
 }

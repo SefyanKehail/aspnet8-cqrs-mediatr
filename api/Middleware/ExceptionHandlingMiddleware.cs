@@ -36,11 +36,13 @@ namespace api.Middleware
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync("Invalid request");
             }
-            catch (Exception)
-            {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsJsonAsync("An Unexpected error occured");
-            }
+            // catch (Exception e)
+            // {
+            //     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            //     await context.Response.WriteAsJsonAsync("An Unexpected error occured");
+            //     await context.Response.WriteAsJsonAsync(e.Message);
+
+            // }
             // catch exceptions
         }
     }

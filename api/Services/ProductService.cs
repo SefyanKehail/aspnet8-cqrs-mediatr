@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Exceptions;
 using api.Features.Product.DTOs;
+using api.Mappers;
 using api.Models;
 using api.Repositories;
 
@@ -15,7 +16,7 @@ namespace api.Services
 
         public ProductService(IProductRepository productRepository)
         {
-            this._productRepository = productRepository;
+            _productRepository = productRepository;
         }
 
 
@@ -31,12 +32,7 @@ namespace api.Services
 
             product = await _productRepository.CreateAsync(product);
 
-            return new ProductDTO
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Amount = product.Amount
-            };
+            return ProductMapper.ToDto(product);
 
         }
 
@@ -61,55 +57,43 @@ namespace api.Services
                 return null;
             }
 
-            return new ProductDTO
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Amount = product.Amount
-            };
-        }
-
-        private async Task<Product?> GetByIdAsyncFullEntity(int id)
-        {
-            var product = await _productRepository.GetByIdAsync(id);
-
-            if (product == null)
-            {
-                return null;
-            }
-
-            return product;
+            return ProductMapper.ToDto(product);
         }
 
 
         public async Task<ProductDTO> UpdateAsync(int id, RequestProductDTO requestProductDTO)
         {
-            var product = await GetByIdAsyncFullEntity(id);
+            var product = await GetByIdAsync(id);
 
             if (product == null)
             {
                 throw new ProductNotFoundException();
             }
 
+            Console.WriteLine($"*******************{requestProductDTO.Name}");
+            Console.WriteLine($"*******************{requestProductDTO.Amount}");
+            
             product.Name = requestProductDTO.Name != null ? requestProductDTO.Name : product.Name;
             product.Amount = requestProductDTO.Amount != null ? (decimal)requestProductDTO.Amount : product.Amount;
+            
+            await _productRepository.UpdateAsync(id, ProductMapper.ToEntity(product));
 
-
-            await _productRepository.UpdateAsync(id, product);
-
-            return new ProductDTO
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Amount = product.Amount
-            };
+            Console.WriteLine($"********************************************** 1 ********************************{product.Name}");
+        
+            
+            return product;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
 
-            return products.Select(p => new ProductDTO { Id = p.Id, Name = p.Name, Amount = p.Amount });
+            return products.Select(ProductMapper.ToDto);
+        }
+
+        public IQueryable<Product> GetAllQuery()
+        {
+            return _productRepository.GetAllQuery();
         }
     }
 }
