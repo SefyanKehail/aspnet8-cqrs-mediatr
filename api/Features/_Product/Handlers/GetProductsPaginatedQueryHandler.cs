@@ -18,9 +18,12 @@ namespace api.Features._Product.Handlers
     {
         private readonly IProductRepository _productRepository;
 
-        public GetProductsPaginatedQueryHandler(IProductRepository productRepository)
+        private readonly ProductMapper _productMapper;
+
+        public GetProductsPaginatedQueryHandler(IProductRepository productRepository, ProductMapper productMapper)
         {
             _productRepository = productRepository;
+            _productMapper = productMapper;
         }
 
         public async Task<PagedResult<ProductDTO>> Handle(GetProductsPaginatedQuery request, CancellationToken cancellationToken)
@@ -52,7 +55,7 @@ namespace api.Features._Product.Handlers
             List<ProductDTO> productDTOs = products
                             .Skip((queryParamsDTO.PageNumber - 1) * queryParamsDTO.PageSize)
                             .Take(queryParamsDTO.PageSize)
-                            .Select(ProductMapper.ToDto).ToList();
+                            .Select(_productMapper.ProductToProductDTO).ToList();
 
             return new PagedResult<ProductDTO>(productDTOs, totalItems, queryParamsDTO.PageSize, queryParamsDTO.PageNumber);
         }

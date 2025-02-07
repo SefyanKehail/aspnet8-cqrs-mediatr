@@ -15,11 +15,14 @@ namespace api.Features._Product.Handlers
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductDTO>
     {
         private readonly IProductRepository _productRepository;
+        private readonly ProductMapper _productMapper;
 
-        public UpdateProductCommandHandler(IProductRepository productRepository)
+        public UpdateProductCommandHandler(IProductRepository productRepository, ProductMapper productMapper)
         {
             _productRepository = productRepository;
+            _productMapper = productMapper;
         }
+
 
         // TODO refactor to return productDTO
         public async Task<ProductDTO> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
@@ -46,7 +49,7 @@ namespace api.Features._Product.Handlers
 
             product = await _productRepository.UpdateAsync(request.Id, product);
 
-            return ProductMapper.ToDto(product);
+            return _productMapper.ProductToProductDTO(product);
         }
     }
 }

@@ -15,6 +15,6 @@ namespace api.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public int StockQuantity { get; set; }
-        public bool IsAvailableInStock { get; set; } = false;
+        public bool IsAvailableInStock { get; set; } = true;
     }
 }

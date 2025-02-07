@@ -15,17 +15,19 @@ namespace api.Features._Product.Handlers
     public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, IEnumerable<ProductDTO>>
     {
         private readonly IProductRepository _productRepository;
+        private readonly ProductMapper _productMapper;
 
-        public GetAllProductsQueryHandler(IProductRepository productRepository)
+        public GetAllProductsQueryHandler(IProductRepository productRepository, ProductMapper productMapper)
         {
             _productRepository = productRepository;
+            _productMapper = productMapper;
         }
 
         public async Task<IEnumerable<ProductDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
            IEnumerable<Product> products =  await _productRepository.GetAllAsync();
 
-           return products.Select(ProductMapper.ToDto);
+           return products.Select(_productMapper.ProductToProductDTO);
         }
     }
 }

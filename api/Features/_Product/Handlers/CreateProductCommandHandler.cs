@@ -16,10 +16,12 @@ namespace api.Features._Product.Handlers
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDTO>
     {
         private readonly IProductRepository _productRepository;
+        private readonly ProductMapper _productMapper;
 
-        public CreateProductCommandHandler(IProductRepository productRepository)
+        public CreateProductCommandHandler(IProductRepository productRepository, ProductMapper productMapper)
         {
             _productRepository = productRepository;
+            _productMapper = productMapper;
         }
 
         public async Task<ProductDTO> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -35,7 +37,7 @@ namespace api.Features._Product.Handlers
                 Amount = (decimal)request.requestProductDTO.Amount!
             };
 
-            return ProductMapper.ToDto(await _productRepository.CreateAsync(product));
+            return _productMapper.ProductToProductDTO(await _productRepository.CreateAsync(product));
         }
     }
 }

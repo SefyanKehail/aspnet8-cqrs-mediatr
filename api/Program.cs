@@ -1,4 +1,5 @@
 using api.Data;
+using api.Mappers;
 using api.Middleware;
 using api.Repositories;
 using api.Services;
@@ -41,6 +42,7 @@ builder.Services.AddSwaggerGen();
 
 // Dependencies
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ProductMapper>();
 
 
 

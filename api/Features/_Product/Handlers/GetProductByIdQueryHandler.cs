@@ -16,10 +16,12 @@ namespace api.Features._Product.Handlers
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDTO?>
     {
         private readonly IProductRepository _productRepository;
+        private readonly ProductMapper _productMapper;
 
-        public GetProductByIdQueryHandler(IProductRepository productRepository)
+        public GetProductByIdQueryHandler(IProductRepository productRepository, ProductMapper productMapper)
         {
             _productRepository = productRepository;
+            _productMapper = productMapper;
         }
 
         public async Task<ProductDTO?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
@@ -36,7 +38,7 @@ namespace api.Features._Product.Handlers
                 throw new ProductNotFoundException();
             }
 
-            return ProductMapper.ToDto(product);
+            return _productMapper.ProductToProductDTO(product);
         }
     }
 }
