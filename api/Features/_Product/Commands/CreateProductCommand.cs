@@ -10,7 +10,7 @@ namespace api.Features._Product.Commands
     // fix this to expect ProductDTO instead
     public class CreateProductCommand : IRequest<ProductDTO>
     {
-        public RequestProductDTO requestProductDTO { get; set; }
+        public RequestProductDTO requestProductDTO { get; set; }    
         public CreateProductCommand(RequestProductDTO requestProductDTO)
         {
             this.requestProductDTO = requestProductDTO;
